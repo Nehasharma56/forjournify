@@ -8,19 +8,19 @@ export default function Dashboard({ navigation, userName }) {
   const [bubbles, setBubbles] = useState([]);
 
   useEffect(() => {
-    const generated = Array.from({ length: 20 }).map((_, i) => ({
+    const generated = Array.from({ length: 30 }).map((_, i) => ({
       id: i,
       x: Math.random() * screenWidth,
       y: Math.random() * screenHeight,
-      size: Math.random() * 40 + 20,
-      opacity: 0.1 + Math.random() * 0.3,
+      size: Math.random() * 60 + 30,
+      opacity: 0.15 + Math.random() * 0.3,
     }));
     setBubbles(generated);
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* BUBBLE BACKGROUND */}
+      {/* Background bubbles */}
       {bubbles.map((bubble) => (
         <View
           key={bubble.id}
@@ -37,10 +37,13 @@ export default function Dashboard({ navigation, userName }) {
         />
       ))}
 
-      {/* TEXT + BUTTONS */}
-      <Text style={styles.greeting}>HI, {userName?.toUpperCase() || 'USER'} 👋</Text>
-      <Text style={styles.subtitle}>Choose your vibe for today 🌈</Text>
+      {/* Glowing Greeting Box */}
+      <View style={styles.greetingBox}>
+        <Text style={styles.greeting}>HI, {userName?.toUpperCase() || 'USER'} 👋</Text>
+        <Text style={styles.subtitle}>Your cozy space for mindful days ✨</Text>
+      </View>
 
+      {/* Feature Buttons */}
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Journal')}>
         <Text style={styles.buttonText}>📓 Daily Journaling</Text>
       </TouchableOpacity>
@@ -52,9 +55,6 @@ export default function Dashboard({ navigation, userName }) {
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Productivity')}>
         <Text style={styles.buttonText}>📈 Productivity Corner</Text>
       </TouchableOpacity>
-
-      {/* Optional Cute Mascot */}
-      {/* <Text style={{ fontSize: 40, marginTop: 30 }}>🧸</Text> */}
     </View>
   );
 }
@@ -62,47 +62,64 @@ export default function Dashboard({ navigation, userName }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff0f5',
+    backgroundColor: '#ffe9f0', // light pink background
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    position: 'relative',
   },
   bubble: {
     position: 'absolute',
-    borderRadius: 50,
+    borderRadius: 999,
     backgroundColor: '#ff69b4',
     zIndex: -1,
   },
+  greetingBox: {
+    backgroundColor: '#fff',
+    paddingVertical: 25,
+    paddingHorizontal: 40,
+    borderRadius: 35,
+    marginBottom: 40,
+    alignItems: 'center',
+
+    // Glowing shadow
+    shadowColor: '#ff69b4',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 20,
+    elevation: 15,
+  },
   greeting: {
-    fontSize: 26,
+    fontSize: 36,
     fontWeight: 'bold',
-    color: '#ff69b4',
-    marginBottom: 10,
-    textTransform: 'uppercase',
+    color: '#ff1493',
+    marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 15,
-    color: '#555',
-    marginBottom: 30,
+    fontSize: 16,
+    color: '#666',
     textAlign: 'center',
+    fontStyle: 'italic',
   },
   button: {
     backgroundColor: '#ffb6c1',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 20,
-    marginVertical: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 50,
+    borderRadius: 30,
+    marginVertical: 12,
     width: '100%',
     alignItems: 'center',
+
     shadowColor: '#ff69b4',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 6, // For Android
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 15,
+    elevation: 8, // Android shadow
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
